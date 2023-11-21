@@ -1,0 +1,25 @@
+{
+    "name": "shopify",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare"
+    },
+    "devDependencies": {
+        "@nuxt/devtools": "latest",
+        "nuxt": "^3.8.2",
+        "prettier": "^3.1.0",
+        "prettier-plugin-tailwindcss": "^0.5.7"
+    },
+    "dependencies": {
+        "@nuxtjs/apollo": "^5.0.0-alpha.8",
+        "@tabler/icons-vue": "^2.42.0",
+        "@unocss/nuxt": "^0.57.7",
+        "@unocss/reset": "^0.57.7",
+        "@vueuse/nuxt": "^10.6.1"
+    }
+}
