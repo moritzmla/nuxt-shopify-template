@@ -23,8 +23,23 @@ export type CollectionModel = {
     title: string;
     description: string;
     image: ImageModel;
+    products: Edges<ProductModel>;
 };
 
 export type CollectionsResponse = {
     collections: Edges<CollectionModel>;
+};
+
+export type CollectionResponse = {
+    collection: CollectionModel;
+};
+
+export type ProductResponse = {
+    product: ProductModel;
+};
+
+export type ProductsResponse = {
+    collection: {
+        products: Edges<ProductModel>;
+    };
 };

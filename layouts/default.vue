@@ -1,7 +1,7 @@
 <template>
     <main class="grid grid-layout-main h-screen overflow-y-scroll">
         <header
-            class="flex items-center justify-between p-4 gap-4 bg-white sticky top-0 border-b border-slate-200"
+            class="flex items-center justify-between p-4 gap-4 bg-white sticky top-0 border-b border-slate-200 z-50"
         >
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2">

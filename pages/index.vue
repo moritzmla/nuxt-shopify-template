@@ -1,10 +1,8 @@
 <template>
-    <div class="flex relative">
+    <div class="flex items-center justify-center relative">
         <img alt="Banner" class="object-cover object-top h-100 w-full select-none" :src="Banner" />
 
-        <div
-            class="flex flex-col items-center text-center sm:text-left sm:items-start sm:pl-50 justify-center gap-4 absolute w-full h-full"
-        >
+        <div class="flex flex-col items-start gap-4 absolute w-full max-w-6xl p-8">
             <UiHeading class="text-white">
                 The Peak <br />
                 Collection
@@ -17,8 +15,34 @@
             </UiButton>
         </div>
     </div>
+
+    <UiCenter>
+        <div class="text-center flex flex-col gap-2">
+            <p class="text-slate-400 uppercase tracking-wider">New arrivals</p>
+
+            <UiHeading> Spring '23 </UiHeading>
+        </div>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div class="flex flex-col gap-4" v-for="product in data?.collection?.products?.edges">
+                <NuxtLink :to="`/products/${product.node.handle}`">
+                    <img
+                        class="rounded aspect-square shadow"
+                        :alt="product.node.title"
+                        :src="product.node.featuredImage.url"
+                    />
+                </NuxtLink>
+
+                <NuxtLink class="font-semibold text-xl" :to="`/products/${product.node.handle}`">
+                    {{ product.node.title }}
+                </NuxtLink>
+            </div>
+        </div>
+    </UiCenter>
 </template>
 
 <script setup lang="ts">
 import Banner from "~/assets/banner.webp";
+
+const { data } = useProducts("featured", 6);
 </script>

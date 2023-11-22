@@ -1,4 +1,9 @@
-import type { CollectionsResponse } from "~/types/shopify";
+import type {
+    CollectionResponse,
+    CollectionsResponse,
+    ProductResponse,
+    ProductsResponse,
+} from "~/types/shopify";
 
 export function useCollections() {
     const query = gql`
@@ -53,7 +58,7 @@ export function useCollection(slug: string) {
         }
     `;
 
-    return useAsyncQuery(query, {
+    return useAsyncQuery<CollectionResponse>(query, {
         slug,
     });
 }
@@ -64,6 +69,7 @@ export function useProduct(slug: string) {
             product(handle: $slug) {
                 id
                 title
+                handle
                 description
                 featuredImage {
                     id
@@ -73,7 +79,35 @@ export function useProduct(slug: string) {
         }
     `;
 
-    return useAsyncQuery(query, {
+    return useAsyncQuery<ProductResponse>(query, {
         slug,
+    });
+}
+
+export function useProducts(collection: string, first?: number) {
+    const query = gql`
+        query getProducts($collection: String!, $first: Int!) {
+            collection(handle: $collection) {
+                products(first: $first) {
+                    edges {
+                        node {
+                            id
+                            title
+                            handle
+                            description
+                            featuredImage {
+                                id
+                                url
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    `;
+
+    return useAsyncQuery<ProductsResponse>(query, {
+        collection,
+        first: first ?? 1000,
     });
 }
