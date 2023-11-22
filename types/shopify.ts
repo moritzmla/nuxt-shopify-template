@@ -1,45 +1,45 @@
 export type Edges<T> = {
-    edges: Array<{
-        node: T;
+    edges?: Array<{
+        node?: T;
     }>;
 };
 
 export type ImageModel = {
-    id: string;
-    url: string;
+    id?: string;
+    url?: string;
 };
 
 export type ProductModel = {
-    id: string;
-    handle: string;
-    title: string;
-    description: string;
-    featuredImage: ImageModel;
+    id?: string;
+    handle?: string;
+    title?: string;
+    description?: string;
+    featuredImage?: ImageModel;
 };
 
 export type CollectionModel = {
-    id: string;
-    handle: string;
-    title: string;
-    description: string;
-    image: ImageModel;
-    products: Edges<ProductModel>;
+    id?: string;
+    handle?: string;
+    title?: string;
+    description?: string;
+    image?: ImageModel;
+    products?: Edges<ProductModel>;
 };
 
 export type CollectionsResponse = {
-    collections: Edges<CollectionModel>;
+    collections?: Edges<CollectionModel>;
 };
 
 export type CollectionResponse = {
-    collection: CollectionModel;
+    collection?: CollectionModel;
 };
 
 export type ProductResponse = {
-    product: ProductModel;
+    product?: ProductModel;
 };
 
 export type ProductsResponse = {
-    collection: {
-        products: Edges<ProductModel>;
+    collection?: {
+        products?: Edges<ProductModel>;
     };
 };

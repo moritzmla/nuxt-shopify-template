@@ -24,20 +24,10 @@
         </div>
 
         <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <div class="flex flex-col gap-4" v-for="product in data?.collection?.products?.edges">
-                <NuxtLink :to="`/products/${product.node.handle}`">
-                    <img
-                        loading="lazy"
-                        class="rounded aspect-square shadow"
-                        :alt="product.node.title"
-                        :src="product.node.featuredImage.url"
-                    />
-                </NuxtLink>
-
-                <NuxtLink class="font-semibold text-xl" :to="`/products/${product.node.handle}`">
-                    {{ product.node.title }}
-                </NuxtLink>
-            </div>
+            <ProductBox
+                :model-value="product.node"
+                v-for="product in data?.collection?.products?.edges"
+            />
         </div>
     </UiCenter>
 </template>
@@ -45,5 +35,5 @@
 <script setup lang="ts">
 import Banner from "~/assets/banner.webp";
 
-const { data } = useProducts("featured", 6);
+const { data } = useCollection("featured", 6);
 </script>
