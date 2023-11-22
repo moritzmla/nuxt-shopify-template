@@ -2,7 +2,10 @@
     <UiCenter>
         <div class="grid sm:grid-cols-2 gap-8">
             <div class="flex flex-col gap-4">
-                <img class="rounded shadow-sm" :src="data.product?.featuredImage?.url" />
+                <img
+                    class="rounded shadow-sm"
+                    :src="data.product?.featuredImage?.url + '&width=360'"
+                />
             </div>
 
             <div class="flex flex-col gap-8">

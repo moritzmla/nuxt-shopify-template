@@ -5,7 +5,7 @@
                 loading="lazy"
                 class="rounded aspect-square shadow"
                 :alt="modelValue?.title"
-                :src="modelValue?.image?.url"
+                :src="modelValue?.image?.url + '&width=360'"
             />
         </NuxtLink>
 
