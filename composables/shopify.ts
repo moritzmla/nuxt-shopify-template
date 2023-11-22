@@ -1,6 +1,8 @@
 import type {
     CollectionResponse,
     CollectionsResponse,
+    Edges,
+    PageModel,
     ProductModel,
     ProductResponse,
 } from "~/types/shopify";
@@ -157,5 +159,49 @@ export function useRecommendations(product: string) {
         productRecommendations?: Array<ProductModel>;
     }>(query, {
         product,
+    });
+}
+
+export function usePages() {
+    type Response = {
+        pages?: Edges<PageModel>;
+    };
+
+    const query = gql`
+        query getPages {
+            pages(first: 100) {
+                edges {
+                    node {
+                        title
+                        handle
+                        body
+                        bodySummary
+                    }
+                }
+            }
+        }
+    `;
+
+    return useAsyncQuery<Response>(query);
+}
+
+export function usePage(key: string) {
+    type Response = {
+        pageByHandle?: PageModel;
+    };
+
+    const query = gql`
+        query getPage($key: String!) {
+            pageByHandle(handle: $key) {
+                title
+                handle
+                body
+                bodySummary
+            }
+        }
+    `;
+
+    return useAsyncQuery<Response>(query, {
+        key,
     });
 }

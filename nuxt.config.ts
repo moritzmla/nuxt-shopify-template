@@ -24,12 +24,16 @@ export default defineNuxtConfig({
                 },
             ],
         ],
+        safelist: ["overflow-y-scroll"],
     },
 
     app: {
         head: {
             title: "Acme Store",
             link: [{ rel: "icon", href: "/favicon.svg" }],
+            bodyAttrs: {
+                class: "overflow-y-scroll",
+            },
         },
     },
 });

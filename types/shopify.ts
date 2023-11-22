@@ -26,6 +26,13 @@ export type CollectionModel = {
     products?: Edges<ProductModel>;
 };
 
+export type PageModel = {
+    title: string;
+    handle: string;
+    body: string;
+    bodySummary: string;
+};
+
 export type CollectionsResponse = {
     collections?: Edges<CollectionModel>;
 };

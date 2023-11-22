@@ -1,43 +1,53 @@
 <template>
-    <main class="grid grid-layout-main h-screen overflow-y-scroll">
-        <header
-            class="flex items-center justify-between p-4 gap-4 bg-white sticky top-0 border-b border-slate-200 z-50"
-        >
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-2">
-                    <img loading="lazy" width="32" height="32" src="/favicon.svg" />
+    <header
+        class="flex items-center justify-between p-4 gap-4 bg-white sticky top-0 border-b border-slate-200 z-50"
+    >
+        <div class="flex items-center gap-4">
+            <UiBrand />
 
-                    <NuxtLink to="/" class="font-semibold font-mono"> ACME STORE </NuxtLink>
-                </div>
+            <hr class="w-px h-6 border-none bg-slate-200" />
 
-                <hr class="w-px h-6 border-none bg-slate-200" />
-
-                <NuxtLink class="text-sm font-semibold hover:underline" to="/collections">
-                    Explore
-                </NuxtLink>
-            </div>
-
-            <UiButton variant="text" class="text-sm" to="/cart">
-                <IconShoppingCart width="22" height="22" />
-
-                Shopping Cart
-            </UiButton>
-        </header>
-
-        <div class="flex flex-col">
-            <slot />
+            <NuxtLink class="text-sm font-semibold hover:underline" to="/collections">
+                Explore
+            </NuxtLink>
         </div>
 
-        <footer class="flex items-center justify-between p-4 gap-4 border-t border-slate-200">
+        <UiButton variant="text" class="text-sm" to="/cart">
+            <IconShoppingCart width="22" height="22" />
+
+            Shopping Cart
+        </UiButton>
+    </header>
+
+    <div class="flex flex-col">
+        <slot />
+    </div>
+
+    <footer class="flex flex-col border-t border-slate-200">
+        <div
+            class="flex flex-col items-start gap-8 md:gap-12 md:flex-row mx-auto w-full max-w-6xl p-8"
+        >
+            <UiBrand />
+
+            <div class="flex flex-col gap-2">
+                <NuxtLink :to="`/${page.node?.handle}`" v-for="page in data?.pages?.edges">
+                    {{ page.node?.title }}
+                </NuxtLink>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between ___ border-t border-slate-200 p-4">
             <span> © {{ new Date().getFullYear() }} ACME </span>
 
             <NuxtLink target="_blank" to="https://moritzmueller.co/">
                 Created by Moritz Müller
             </NuxtLink>
-        </footer>
-    </main>
+        </div>
+    </footer>
 </template>
 
 <script setup lang="ts">
 import { IconShoppingCart } from "@tabler/icons-vue";
+
+const { data } = usePages();
 </script>
