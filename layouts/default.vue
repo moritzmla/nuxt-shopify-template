@@ -36,12 +36,16 @@
             </div>
         </div>
 
-        <div class="flex items-center justify-between ___ border-t border-slate-200 p-4">
-            <span> © {{ new Date().getFullYear() }} ACME </span>
+        <div
+            class="flex items-center justify-between text-sm font-semibold border-t border-slate-200 p-4"
+        >
+            <UiButton variant="text" to="/">
+                <span class="px-2"> © {{ new Date().getFullYear() }} ACME </span>
+            </UiButton>
 
-            <NuxtLink target="_blank" to="https://moritzmueller.co/">
-                Created by Moritz Müller
-            </NuxtLink>
+            <UiButton target="_blank" to="https://moritzmueller.co/">
+                <span class="px-2"> Created by Moritz Müller </span>
+            </UiButton>
         </div>
     </footer>
 </template>

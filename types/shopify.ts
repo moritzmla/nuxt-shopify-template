@@ -32,21 +32,3 @@ export type PageModel = {
     body: string;
     bodySummary: string;
 };
-
-export type CollectionsResponse = {
-    collections?: Edges<CollectionModel>;
-};
-
-export type CollectionResponse = {
-    collection?: CollectionModel;
-};
-
-export type ProductResponse = {
-    product?: ProductModel;
-};
-
-export type ProductsResponse = {
-    collection?: {
-        products?: Edges<ProductModel>;
-    };
-};

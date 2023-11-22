@@ -4,24 +4,24 @@
             <div class="flex flex-col gap-4">
                 <img
                     class="rounded shadow-sm"
-                    :src="data.product?.featuredImage?.url + '&width=360'"
+                    :src="data?.product?.featuredImage?.url + '&width=360'"
                 />
             </div>
 
             <div class="flex flex-col gap-8">
                 <UiHeading>
-                    {{ data.product?.title }}
+                    {{ data?.product?.title }}
                 </UiHeading>
 
                 <p class="text-slate-400">
-                    {{ data.product?.description }}
+                    {{ data?.product?.description }}
                 </p>
 
                 <UiButton> Add to cart </UiButton>
             </div>
         </div>
 
-        <ProductRecommendations :model-value="data.product.id" v-if="data.product?.id" />
+        <ProductRecommendations :model-value="data.product.id" v-if="data?.product?.id" />
     </UiCenter>
 </template>
 
