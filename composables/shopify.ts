@@ -2,7 +2,7 @@ import type { CollectionModel, Edges, PageModel, ProductModel } from "~/types/sh
 
 export function useCollections() {
     type Response = {
-        collections?: Edges<CollectionModel>;
+        collections: Edges<CollectionModel>;
     };
 
     const query = gql`
@@ -29,7 +29,7 @@ export function useCollections() {
 
 export function useCollection(slug: string, first?: number) {
     type Response = {
-        collection?: CollectionModel;
+        collection: CollectionModel;
     };
 
     const query = gql`
@@ -79,7 +79,7 @@ export function useCollection(slug: string, first?: number) {
 
 export function useProduct(slug: string) {
     type Response = {
-        product?: ProductModel;
+        product: ProductModel;
     };
 
     const query = gql`
@@ -136,7 +136,7 @@ export function useProduct(slug: string) {
 
 export function useRecommendations(product: string) {
     type Response = {
-        productRecommendations?: Array<ProductModel>;
+        productRecommendations: Array<ProductModel>;
     };
 
     const query = gql`
@@ -171,7 +171,7 @@ export function useRecommendations(product: string) {
 
 export function usePages() {
     type Response = {
-        pages?: Edges<PageModel>;
+        pages: Edges<PageModel>;
     };
 
     const query = gql`
@@ -194,7 +194,7 @@ export function usePages() {
 
 export function usePage(key: string) {
     type Response = {
-        pageByHandle?: PageModel;
+        pageByHandle: PageModel;
     };
 
     const query = gql`

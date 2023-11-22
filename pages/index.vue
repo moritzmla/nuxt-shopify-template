@@ -8,7 +8,7 @@
                 Collection
             </UiHeading>
 
-            <p class="text-slate-200">Push your performance with our premium athletic wear</p>
+            <h2 class="text-slate-200">Push your performance with our premium athletic wear</h2>
 
             <UiButton variant="primary" class="text-lg" to="/collections/featured">
                 <span class="px-2"> Shop now </span>
@@ -18,7 +18,7 @@
 
     <UiCenter>
         <div class="text-center flex flex-col gap-2">
-            <p class="text-slate-400 uppercase tracking-wider">New arrivals</p>
+            <UiParagraph class="uppercase tracking-wider"> New arrivals </UiParagraph>
 
             <UiHeading> Spring '23 </UiHeading>
         </div>
@@ -26,7 +26,7 @@
         <div class="grid place-content-center sm:grid-cols-2 md:grid-cols-3 gap-8">
             <ProductBox
                 :model-value="product.node"
-                v-for="product in data?.collection?.products?.edges"
+                v-for="product in data?.collection.products.edges"
             />
         </div>
     </UiCenter>

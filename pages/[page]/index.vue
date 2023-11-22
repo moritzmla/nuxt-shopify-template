@@ -1,12 +1,12 @@
 <template>
     <UiCenter>
         <UiHeading>
-            {{ data?.pageByHandle?.title }}
+            {{ data?.pageByHandle.title }}
         </UiHeading>
 
-        <p>
-            {{ data?.pageByHandle?.body }}
-        </p>
+        <UiParagraph>
+            {{ data?.pageByHandle.body }}
+        </UiParagraph>
     </UiCenter>
 </template>
 

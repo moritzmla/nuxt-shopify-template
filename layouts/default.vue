@@ -28,8 +28,8 @@
             <UiBrand />
 
             <div class="flex flex-col gap-2">
-                <UiLink :to="`/${page.node?.handle}`" v-for="page in data?.pages?.edges">
-                    {{ page.node?.title }}
+                <UiLink :to="`/${page.node.handle}`" v-for="page in data?.pages.edges">
+                    {{ page.node.title }}
                 </UiLink>
             </div>
         </div>
