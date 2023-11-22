@@ -3,6 +3,8 @@
         <NuxtLink :to="`/products/${modelValue?.handle}`">
             <img
                 loading="lazy"
+                width="360"
+                height="360"
                 class="rounded aspect-square shadow"
                 :alt="modelValue?.title"
                 :src="modelValue?.featuredImage?.url + '&width=360'"

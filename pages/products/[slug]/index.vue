@@ -13,11 +13,11 @@
                     {{ data.product?.title }}
                 </UiHeading>
 
-                <UiButton> Add to cart </UiButton>
-
                 <p class="text-slate-400">
                     {{ data.product?.description }}
                 </p>
+
+                <UiButton> Add to cart </UiButton>
             </div>
         </div>
 

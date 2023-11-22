@@ -10,7 +10,11 @@
                     <NuxtLink to="/" class="font-semibold font-mono"> ACME STORE </NuxtLink>
                 </div>
 
-                <NuxtLink to="/collections"> Explore </NuxtLink>
+                <hr class="w-px h-6 border-none bg-slate-200" />
+
+                <NuxtLink class="text-sm font-semibold hover:underline" to="/collections">
+                    Explore
+                </NuxtLink>
             </div>
 
             <UiButton variant="text" class="text-sm" to="/cart">

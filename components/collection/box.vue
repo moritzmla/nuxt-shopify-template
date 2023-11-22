@@ -3,6 +3,8 @@
         <NuxtLink :to="`/collections/${modelValue?.handle}`">
             <img
                 loading="lazy"
+                width="360"
+                height="360"
                 class="rounded aspect-square shadow"
                 :alt="modelValue?.title"
                 :src="modelValue?.image?.url + '&width=360'"

@@ -3,7 +3,6 @@ import type {
     CollectionsResponse,
     ProductModel,
     ProductResponse,
-    ProductsResponse,
 } from "~/types/shopify";
 
 export function useCollections() {
@@ -48,6 +47,16 @@ export function useCollection(slug: string, first?: number) {
                             title
                             handle
                             description
+                            priceRange {
+                                maxVariantPrice {
+                                    amount
+                                    currencyCode
+                                }
+                                minVariantPrice {
+                                    amount
+                                    currencyCode
+                                }
+                            }
                             featuredImage {
                                 id
                                 url
@@ -73,6 +82,38 @@ export function useProduct(slug: string) {
                 title
                 handle
                 description
+                options {
+                    id
+                    name
+                    values
+                }
+                priceRange {
+                    maxVariantPrice {
+                        amount
+                        currencyCode
+                    }
+                    minVariantPrice {
+                        amount
+                        currencyCode
+                    }
+                }
+                variants(first: 250) {
+                    edges {
+                        node {
+                            id
+                            title
+                            availableForSale
+                            selectedOptions {
+                                name
+                                value
+                            }
+                            price {
+                                amount
+                                currencyCode
+                            }
+                        }
+                    }
+                }
                 featuredImage {
                     id
                     url
@@ -86,34 +127,6 @@ export function useProduct(slug: string) {
     });
 }
 
-export function useProducts(collection: string, first?: number) {
-    const query = gql`
-        query getProducts($collection: String!, $first: Int!) {
-            collection(handle: $collection) {
-                products(first: $first) {
-                    edges {
-                        node {
-                            id
-                            title
-                            handle
-                            description
-                            featuredImage {
-                                id
-                                url
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    `;
-
-    return useAsyncQuery<ProductsResponse>(query, {
-        collection,
-        first: first ?? 1000,
-    });
-}
-
 export function useRecommendations(product: string) {
     const query = gql`
         query getRecommendations($product: ID!) {
@@ -122,6 +135,16 @@ export function useRecommendations(product: string) {
                 title
                 handle
                 description
+                priceRange {
+                    maxVariantPrice {
+                        amount
+                        currencyCode
+                    }
+                    minVariantPrice {
+                        amount
+                        currencyCode
+                    }
+                }
                 featuredImage {
                     id
                     url
