@@ -15,6 +15,8 @@ export type ProductModel = {
     title?: string;
     description?: string;
     featuredImage?: ImageModel;
+    priceRange?: PriceRangeModel;
+    options?: Array<OptionModel>;
 };
 
 export type CollectionModel = {
@@ -31,4 +33,19 @@ export type PageModel = {
     handle: string;
     body: string;
     bodySummary: string;
+};
+
+export type OptionModel = {
+    name: string;
+    values: Array<string>;
+};
+
+export type VariantPriceModel = {
+    amount?: number;
+    currencyCode?: string;
+};
+
+export type PriceRangeModel = {
+    minVariantPrice?: VariantPriceModel;
+    maxVariantPrice?: VariantPriceModel;
 };

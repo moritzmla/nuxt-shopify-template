@@ -7,9 +7,7 @@
 
             <hr class="w-px h-6 border-none bg-slate-200" />
 
-            <NuxtLink class="text-sm font-semibold hover:underline" to="/collections">
-                Explore
-            </NuxtLink>
+            <UiLink class="text-sm hover:underline" to="/collections"> Explore </UiLink>
         </div>
 
         <UiButton variant="text" class="text-sm" to="/cart">
@@ -30,9 +28,9 @@
             <UiBrand />
 
             <div class="flex flex-col gap-2">
-                <NuxtLink :to="`/${page.node?.handle}`" v-for="page in data?.pages?.edges">
+                <UiLink :to="`/${page.node?.handle}`" v-for="page in data?.pages?.edges">
                     {{ page.node?.title }}
-                </NuxtLink>
+                </UiLink>
             </div>
         </div>
 
