@@ -5,7 +5,7 @@
         >
             <div class="flex items-center gap-4">
                 <div class="flex items-center gap-2">
-                    <img width="32" height="32" src="/favicon.svg" />
+                    <img loading="lazy" width="32" height="32" src="/favicon.svg" />
 
                     <NuxtLink to="/" class="font-semibold font-mono"> ACME STORE </NuxtLink>
                 </div>

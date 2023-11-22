@@ -6,6 +6,7 @@
             <div class="flex flex-col gap-4" v-for="collection in data?.collections?.edges">
                 <NuxtLink :to="`/collections/${collection.node.handle}`">
                     <img
+                        loading="lazy"
                         class="rounded aspect-square shadow"
                         :alt="collection.node.title"
                         :src="collection.node.image.url"

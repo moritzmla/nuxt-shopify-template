@@ -27,6 +27,7 @@
             <div class="flex flex-col gap-4" v-for="product in data?.collection?.products?.edges">
                 <NuxtLink :to="`/products/${product.node.handle}`">
                     <img
+                        loading="lazy"
                         class="rounded aspect-square shadow"
                         :alt="product.node.title"
                         :src="product.node.featuredImage.url"
