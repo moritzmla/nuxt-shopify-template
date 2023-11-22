@@ -1,6 +1,6 @@
 <template>
     <header
-        class="flex items-center justify-between p-4 gap-4 bg-white sticky top-0 border-b border-slate-200 z-50"
+        class="flex items-center justify-between p-4 gap-4 bg-white border-b border-slate-200 z-50"
     >
         <div class="flex items-center gap-4">
             <UiBrand />
@@ -13,7 +13,7 @@
         <UiButton variant="text" class="text-sm" to="/cart">
             <IconShoppingCart width="22" height="22" />
 
-            Shopping Cart
+            <span class="hidden md:block"> Shopping Cart </span>
         </UiButton>
     </header>
 
