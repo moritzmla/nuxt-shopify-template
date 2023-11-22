@@ -30,7 +30,8 @@ withDefaults(
 );
 
 const variants: Record<Variant, string> = {
-    "primary": "text-white bg-blue-500 hover:bg-blue-400  active:bg-blue-300",
+    "primary":
+        "text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 active:from-blue-400 active:to-blue-300",
     "text": "hover:bg-slate-50 active:bg-slate-100",
 };
 </script>
