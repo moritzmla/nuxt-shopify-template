@@ -1,4 +1,155 @@
-import type { CollectionModel, Edges, PageModel, ProductModel } from "~/types/shopify";
+import type {
+    CartLineInput,
+    CartLineUpdateInput,
+    CartModel,
+    CollectionModel,
+    Edges,
+    PageModel,
+    ProductModel,
+} from "~/types/shopify";
+
+const imageFragment = gql`
+    fragment image on Image {
+        url
+        altText
+        width
+        height
+    }
+`;
+
+const priceFragment = gql`
+    fragment price on MoneyV2 {
+        amount
+        currencyCode
+    }
+`;
+
+const pageFragment = gql`
+    fragment page on Page {
+        title
+        handle
+        body
+        bodySummary
+    }
+`;
+
+const seoFragment = gql`
+    fragment seo on SEO {
+        description
+        title
+    }
+`;
+
+const collectionFragment = gql`
+    fragment collection on Collection {
+        id
+        handle
+        title
+        description
+        image {
+            ...image
+        }
+        seo {
+            ...seo
+        }
+    }
+    ${seoFragment}
+    ${imageFragment}
+`;
+
+const productFragment = gql`
+    fragment product on Product {
+        id
+        title
+        handle
+        description
+        options {
+            id
+            name
+            values
+        }
+        priceRange {
+            minVariantPrice {
+                ...price
+            }
+            maxVariantPrice {
+                ...price
+            }
+        }
+        seo {
+            ...seo
+        }
+        featuredImage {
+            ...image
+        }
+        variants(first: 250) {
+            edges {
+                node {
+                    id
+                    title
+                    availableForSale
+                    selectedOptions {
+                        name
+                        value
+                    }
+                    price {
+                        ...price
+                    }
+                }
+            }
+        }
+    }
+    ${seoFragment}
+    ${priceFragment}
+    ${imageFragment}
+`;
+
+const cartFragment = gql`
+    fragment cart on Cart {
+        id
+        checkoutUrl
+        totalQuantity
+        cost {
+            subtotalAmount {
+                ...price
+            }
+            totalAmount {
+                ...price
+            }
+            totalTaxAmount {
+                ...price
+            }
+        }
+        lines(first: 100) {
+            edges {
+                node {
+                    id
+                    quantity
+                    cost {
+                        totalAmount {
+                            ...price
+                        }
+                    }
+                    merchandise {
+                        ... on ProductVariant {
+                            id
+                            title
+                            selectedOptions {
+                                name
+                                value
+                            }
+                            product {
+                                ...product
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ${productFragment}
+    ${priceFragment}
+`;
 
 export function useCollections() {
     type Response = {
@@ -6,131 +157,65 @@ export function useCollections() {
     };
 
     const query = gql`
-        {
+        query getCollections {
             collections(first: 100, sortKey: TITLE) {
                 edges {
                     node {
-                        id
-                        handle
-                        title
-                        description
-                        image {
-                            id
-                            url
-                        }
+                        ...collection
                     }
                 }
             }
         }
+        ${collectionFragment}
     `;
 
     return useAsyncQuery<Response | undefined>(query);
 }
 
-export function useCollection(slug: string, first?: number) {
+export function useCollection(collection: string, first?: number) {
     type Response = {
         collection: CollectionModel;
     };
 
     const query = gql`
-        query getCollection($slug: String!, $first: Int!) {
-            collection(handle: $slug) {
-                id
-                handle
-                title
-                description
-                image {
-                    id
-                    url
-                }
+        query getCollection($collection: String!, $first: Int!) {
+            collection(handle: $collection) {
+                ...collection
                 products(first: $first) {
                     edges {
                         node {
-                            id
-                            title
-                            handle
-                            description
-                            priceRange {
-                                maxVariantPrice {
-                                    amount
-                                    currencyCode
-                                }
-                                minVariantPrice {
-                                    amount
-                                    currencyCode
-                                }
-                            }
-                            featuredImage {
-                                id
-                                url
-                            }
+                            ...product
                         }
                     }
                 }
             }
         }
+        ${productFragment}
+        ${collectionFragment}
     `;
 
     return useAsyncQuery<Response | undefined>(query, {
-        slug,
+        collection,
         first: first ?? 100,
     });
 }
 
-export function useProduct(slug: string) {
+export function useProduct(product: string) {
     type Response = {
         product: ProductModel;
     };
 
     const query = gql`
-        query getProduct($slug: String!) {
-            product(handle: $slug) {
-                id
-                title
-                handle
-                description
-                options {
-                    id
-                    name
-                    values
-                }
-                priceRange {
-                    maxVariantPrice {
-                        amount
-                        currencyCode
-                    }
-                    minVariantPrice {
-                        amount
-                        currencyCode
-                    }
-                }
-                variants(first: 250) {
-                    edges {
-                        node {
-                            id
-                            title
-                            availableForSale
-                            selectedOptions {
-                                name
-                                value
-                            }
-                            price {
-                                amount
-                                currencyCode
-                            }
-                        }
-                    }
-                }
-                featuredImage {
-                    id
-                    url
-                }
+        query getProduct($product: String!) {
+            product(handle: $product) {
+                ...product
             }
         }
+        ${productFragment}
     `;
 
     return useAsyncQuery<Response | undefined>(query, {
-        slug,
+        product,
     });
 }
 
@@ -142,26 +227,10 @@ export function useRecommendations(product: string) {
     const query = gql`
         query getRecommendations($product: ID!) {
             productRecommendations(productId: $product) {
-                id
-                title
-                handle
-                description
-                priceRange {
-                    maxVariantPrice {
-                        amount
-                        currencyCode
-                    }
-                    minVariantPrice {
-                        amount
-                        currencyCode
-                    }
-                }
-                featuredImage {
-                    id
-                    url
-                }
+                ...product
             }
         }
+        ${productFragment}
     `;
 
     return useAsyncQuery<Response | undefined>(query, {
@@ -179,80 +248,138 @@ export function usePages() {
             pages(first: 100) {
                 edges {
                     node {
-                        title
-                        handle
-                        body
-                        bodySummary
+                        ...page
                     }
                 }
             }
         }
+        ${pageFragment}
     `;
 
     return useAsyncQuery<Response | undefined>(query);
 }
 
-export function usePage(key: string) {
+export function usePage(page: string) {
     type Response = {
         pageByHandle: PageModel;
     };
 
     const query = gql`
-        query getPage($key: String!) {
-            pageByHandle(handle: $key) {
-                title
-                handle
-                body
-                bodySummary
+        query getPage($page: String!) {
+            pageByHandle(handle: $page) {
+                ...page
             }
         }
+        ${pageFragment}
     `;
 
     return useAsyncQuery<Response | undefined>(query, {
-        key,
+        page,
     });
 }
 
-export function useCart(key: string) {
+export function useCart(cart: string) {
+    type Response = {
+        cart: CartModel;
+    };
+
     const query = gql`
-        query getCart($key: ID!) {
-            cart(id: $key) {
-                id
-                checkoutUrl
-                totalQuantity
-                cost {
-                    subtotalAmount {
-                        amount
-                        currencyCode
-                    }
-                    totalAmount {
-                        amount
-                        currencyCode
-                    }
-                    totalTaxAmount {
-                        amount
-                        currencyCode
-                    }
-                }
-                lines(first: 100) {
-                    edges {
-                        node {
-                            id
-                            quantity
-                            cost {
-                                totalAmount {
-                                    amount
-                                    currencyCode
-                                }
-                            }
-                        }
-                    }
+        query getCart($cart: ID!) {
+            cart(id: $cart) {
+                ...cart
+            }
+        }
+        ${cartFragment}
+    `;
+
+    return useAsyncQuery<Response | undefined>(query, {
+        cart,
+    });
+}
+
+export function useCreateCart() {
+    type Response = {
+        cartCreate: {
+            cart: CartModel;
+        };
+    };
+
+    const mutation = gql`
+        mutation createCart($lines: [CartLineInput!]) {
+            cartCreate(input: { lines: $lines }) {
+                cart {
+                    ...cart
                 }
             }
         }
+        ${cartFragment}
     `;
 
-    return useAsyncQuery(query, {
-        key,
+    return useMutation<Response>(mutation);
+}
+
+export function useUpdateCartLines(cart: string, lines: Array<CartLineUpdateInput>) {
+    type Response = {};
+
+    const mutation = gql`
+        mutation editCartItems($cart: ID!, $lines: [CartLineUpdateInput!]!) {
+            cartLinesUpdate(cartId: $cart, lines: $lines) {
+                cart {
+                    ...cart
+                }
+            }
+        }
+        ${cartFragment}
+    `;
+
+    return useMutation<Response>(mutation, {
+        variables: {
+            cart,
+            lines,
+        },
+    });
+}
+
+export function useCreateCartLine(cart: string, lines: Array<CartLineInput>) {
+    type Response = {};
+
+    const mutation = gql`
+        mutation addToCart($cart: ID!, $lines: [CartLineInput!]!) {
+            cartLinesAdd(cartId: $cart, lines: $lines) {
+                cart {
+                    ...cart
+                }
+            }
+        }
+        ${cartFragment}
+    `;
+
+    return useMutation<Response>(mutation, {
+        variables: {
+            cart,
+            lines,
+        },
+    });
+}
+
+export function useDeleteCartLine(cart: string, lines: Array<string>) {
+    type Response = {};
+
+    const mutation = gql`
+        mutation removeFromCart($cart: ID!, $lines: [ID!]!) {
+            cartLinesRemove(cartId: $cart, lineIds: $lines) {
+                cart {
+                    ...cart
+                }
+            }
+        }
+        ${cartFragment}
+    `;
+
+    return useMutation<Response>(mutation, {
+        variables: {
+            cart,
+            lines,
+        },
     });
 }

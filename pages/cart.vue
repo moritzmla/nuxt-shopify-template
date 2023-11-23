@@ -1,3 +1,11 @@
-<template></template>
+<template>
+    <UiCenter>
+        <UiHeading> Your cart </UiHeading>
 
-<script setup lang="ts"></script>
+        <CartModel :model-value="cookie" v-if="cookie" />
+    </UiCenter>
+</template>
+
+<script setup lang="ts">
+const cookie = useCookie("cart");
+</script>

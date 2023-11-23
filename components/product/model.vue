@@ -6,7 +6,7 @@
                 width="360"
                 height="360"
                 class="rounded-lg aspect-square transition duration-200 hover:scale-104"
-                :alt="modelValue.title"
+                :alt="modelValue.featuredImage.altText"
                 :src="modelValue.featuredImage.url + '&width=360'"
             />
         </NuxtLink>
@@ -17,7 +17,7 @@
             </UiLink>
 
             <div>
-                {{ formatter.format(modelValue.priceRange.minVariantPrice.amount ?? 0) }}
+                <UiPrice :model-value="modelValue.priceRange.minVariantPrice" />
             </div>
         </div>
     </div>
@@ -29,9 +29,4 @@ import type { ProductModel } from "~/types/shopify";
 defineProps<{
     modelValue: ProductModel;
 }>();
-
-const formatter = Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-});
 </script>

@@ -7,8 +7,10 @@ export type Nodes<T> = {
 };
 
 export type ImageModel = {
-    id: string;
     url: string;
+    altText: string;
+    width: number;
+    height: number;
 };
 
 export type ProductModel = {
@@ -17,9 +19,12 @@ export type ProductModel = {
     title: string;
     description: string;
     featuredImage: ImageModel;
-    priceRange: PriceRangeModel;
     options: Array<OptionModel>;
     variants: Edges<VariantModel>;
+    priceRange: {
+        minVariantPrice: PriceModel;
+        maxVariantPrice: PriceModel;
+    };
 };
 
 export type CollectionModel = {
@@ -61,7 +66,33 @@ export type PriceModel = {
     currencyCode: string;
 };
 
-export type PriceRangeModel = {
-    minVariantPrice: PriceModel;
-    maxVariantPrice: PriceModel;
+export type CartLineInput = {
+    merchandiseId: string;
+    quantity: number;
+};
+
+export type CartLineUpdateInput = {
+    id: string;
+    merchandiseId: string;
+    quantity: number;
+};
+
+export type CartLineModel = {
+    id: string;
+    quantity: number;
+    merchandise: VariantModel & {
+        product: ProductModel;
+    };
+};
+
+export type CartModel = {
+    id: string;
+    checkoutUrl: string;
+    totalQuantity: number;
+    cost: {
+        subtotalAmount: PriceModel;
+        totalAmount: PriceModel;
+        totalTaxAmount: PriceModel;
+    };
+    lines: Edges<CartLineModel>;
 };

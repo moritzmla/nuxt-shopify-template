@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-    modules: ["@nuxtjs/apollo", "@vueuse/nuxt", "@unocss/nuxt"],
+    modules: ["@nuxtjs/apollo", "@unocss/nuxt"],
 
     devtools: {
         enabled: false,
