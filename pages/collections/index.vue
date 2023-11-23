@@ -12,5 +12,5 @@
 </template>
 
 <script setup lang="ts">
-const { data } = useCollections();
+const { data } = await useCollections();
 </script>

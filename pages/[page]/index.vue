@@ -13,5 +13,5 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const { data } = usePage(route.params.page as string);
+const { data } = await usePage(route.params.page as string);
 </script>

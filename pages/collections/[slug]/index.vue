@@ -18,5 +18,5 @@
 <script setup lang="ts">
 const route = useRoute();
 
-const { data } = useCollection(route.params.slug as string);
+const { data } = await useCollection(route.params.slug as string);
 </script>

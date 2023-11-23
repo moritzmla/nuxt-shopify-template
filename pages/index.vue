@@ -35,5 +35,5 @@
 <script setup lang="ts">
 import Banner from "~/assets/banner.webp";
 
-const { data } = useCollection("featured", 6);
+const { data } = await useCollection("featured", 6);
 </script>
