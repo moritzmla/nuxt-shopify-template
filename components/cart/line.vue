@@ -24,7 +24,7 @@
                 </UiParagraph>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex gap-2 flex-wrap">
                 <UiButton variant="outline" :loading="deleteLoading" @click="deleteLine">
                     <IconTrash width="20" height="20" />
                 </UiButton>
