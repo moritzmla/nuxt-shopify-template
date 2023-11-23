@@ -47,30 +47,12 @@
 
 <script setup lang="ts">
 import { IconShoppingCart } from "@tabler/icons-vue";
-import type { CartLineModel } from "~/types/shopify";
 
 const props = defineProps<{
     modelValue: string;
 }>();
 
-const { mutate: deleteCartLine } = useDeleteCartLine();
-const { data, refresh } = useCart(props.modelValue);
-
-const isLoading = ref(false);
+const { data } = useCart(props.modelValue);
 
 const isEmpty = computed(() => data.value && data.value.cart.lines.edges.length === 0);
-
-async function deleteLine(line: CartLineModel) {
-    isLoading.value = true;
-    try {
-        await deleteCartLine({
-            cart: props.modelValue,
-            lines: [line.id],
-        });
-
-        await refresh();
-    } finally {
-        isLoading.value = false;
-    }
-}
 </script>
