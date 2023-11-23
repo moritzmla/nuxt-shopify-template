@@ -24,15 +24,31 @@
                 </UiParagraph>
             </div>
 
-            <UiButton variant="outline" :loading="loading" @click="deleteLine">
-                <IconTrash width="20" height="20" />
-            </UiButton>
+            <div class="flex gap-2">
+                <UiButton variant="outline" :loading="deleteLoading" @click="deleteLine">
+                    <IconTrash width="20" height="20" />
+                </UiButton>
+
+                <div class="flex items-center border border-slate-200 rounded-lg">
+                    <UiButton variant="text" :loading="updateLoading" @click="changeQuantity(-1)">
+                        <IconMinus width="20" height="20" />
+                    </UiButton>
+
+                    <span class="text-sm px-4">
+                        {{ modelValue.quantity }}
+                    </span>
+
+                    <UiButton variant="text" :loading="updateLoading" @click="changeQuantity(1)">
+                        <IconPlus width="20" height="20" />
+                    </UiButton>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { IconTrash } from "@tabler/icons-vue";
+import { IconMinus, IconPlus, IconTrash } from "@tabler/icons-vue";
 import type { CartLineModel } from "~/types/shopify";
 
 const props = defineProps<{
@@ -41,7 +57,8 @@ const props = defineProps<{
 
 const cartCookie = useCartCookie();
 
-const { mutate: deleteLineMutation, loading } = useDeleteCartLine();
+const { mutate: updateLineMutation, loading: updateLoading } = useUpdateCartLines();
+const { mutate: deleteLineMutation, loading: deleteLoading } = useDeleteCartLine();
 
 const productUrl = computed(() => {
     const searchParams = new URLSearchParams();
@@ -52,6 +69,21 @@ const productUrl = computed(() => {
 
     return `/products/${props.modelValue.merchandise.product.handle}?${searchParams}`;
 });
+
+async function changeQuantity(amount: number) {
+    await updateLineMutation({
+        cart: cartCookie.value ?? "",
+        lines: [
+            {
+                id: props.modelValue.id,
+                merchandiseId: props.modelValue.merchandise.id,
+                quantity: props.modelValue.quantity + amount,
+            },
+        ],
+    });
+
+    refreshNuxtData("Cart");
+}
 
 async function deleteLine() {
     await deleteLineMutation({

@@ -1,20 +1,17 @@
 <template>
     <component
         class="relative inline-flex cursor-pointer justify-center items-center select-none gap-2 whitespace-nowrap rounded-lg p-2 font-semibold outline-none ring-slate-200 focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50"
-        :class="[variants[variant], { 'text-opacity-0': loading }]"
+        :class="[variants[variant]]"
         :is="to ? NuxtLink : 'button'"
         :disabled="disabled || loading"
         :to="to"
     >
-        <IconLoader width="24" height="24" class="absolute animate-spin" v-if="loading" />
-
         <slot />
     </component>
 </template>
 
 <script setup lang="ts">
 import { NuxtLink } from "#components";
-import { IconLoader } from "@tabler/icons-vue";
 import { type Component } from "vue";
 
 type Variant = "primary" | "outline" | "highlight" | "text";
