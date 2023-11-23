@@ -14,7 +14,7 @@
                     {{ data.product.title }}
                 </UiHeading>
 
-                <UiParagraph>
+                <UiParagraph v-if="data.product.description">
                     {{ data.product.description }}
                 </UiParagraph>
 
@@ -46,11 +46,8 @@
                     </div>
                 </div>
 
-                <UiButton
-                    :disabled="currentVariant ? !currentVariant.node.availableForSale : true"
-                    @click="addCartLine"
-                >
-                    Add to cart
+                <UiButton :disabled="!currentVariant || outOfStock" @click="addCartLine">
+                    {{ outOfStock ? "Out of stock" : "Add to cart" }}
                 </UiButton>
             </div>
         </div>
@@ -77,6 +74,10 @@ const currentVariant = computed(() => {
         );
     }
 });
+
+const outOfStock = computed(
+    () => currentVariant.value && !currentVariant.value.node.availableForSale
+);
 
 async function addCartLine() {
     const cart = await getCart();
