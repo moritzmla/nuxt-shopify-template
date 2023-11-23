@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-const cookie = useCookie("cart");
+const cookie = useCartCookie();
 </script>

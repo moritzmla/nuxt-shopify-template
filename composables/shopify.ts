@@ -151,6 +151,12 @@ const cartFragment = gql`
     ${priceFragment}
 `;
 
+export function useCartCookie() {
+    return useCookie("cart", {
+        sameSite: true,
+    });
+}
+
 export function useCollections() {
     type Response = {
         collections: Edges<CollectionModel>;

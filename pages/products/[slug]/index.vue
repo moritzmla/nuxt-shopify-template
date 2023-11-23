@@ -65,7 +65,7 @@ import type { OptionModel } from "~/types/shopify";
 
 const route = useRoute();
 const router = useRouter();
-const cookie = useCookie("cart");
+const cookie = useCartCookie();
 
 const { mutate: createCart } = useCreateCart();
 const { mutate: createCartLine } = useCreateCartLine();
@@ -86,6 +86,21 @@ const currentVariant = computed(() => {
 const outOfStock = computed(
     () => currentVariant.value && !currentVariant.value.node.availableForSale
 );
+
+const combinations = computed(() => {
+    if (data.value) {
+        return data.value.product.variants.edges.map((variant) => ({
+            availableForSale: variant.node.availableForSale,
+            options: variant.node.selectedOptions.reduce<Record<string, string>>(
+                (accumulator, option) => ({
+                    ...accumulator,
+                    [option.name]: option.value,
+                }),
+                {}
+            ),
+        }));
+    }
+});
 
 async function addCartLine() {
     isLoading.value = true;
@@ -126,7 +141,30 @@ async function getCart() {
     }
 }
 
-function isOptionDisabled(value: string, option: OptionModel) {
+function isOptionDisabled(currentValue: string, option: OptionModel) {
+    const currentQuery = {
+        ...route.query,
+        [option.name]: currentValue,
+    };
+
+    if (data.value) {
+        const possibilities = Object.entries(currentQuery).filter(([key, value]) => {
+            if (data.value) {
+                return data.value.product.options.find(
+                    (option) => option.name === key && option.values.includes(value as string)
+                );
+            }
+        });
+
+        const combination = combinations.value?.find((combination) =>
+            possibilities.every(
+                ([key, value]) => combination.options[key] === value && combination.availableForSale
+            )
+        );
+
+        return combination === undefined;
+    }
+
     return false;
 }
 
