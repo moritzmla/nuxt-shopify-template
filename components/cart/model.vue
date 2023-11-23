@@ -7,7 +7,7 @@
                         loading="lazy"
                         width="180"
                         height="180"
-                        class="rounded-lg aspect-square"
+                        class="rounded-lg aspect-square shadow-sm"
                         :alt="line.node.merchandise.product.featuredImage.altText"
                         :src="line.node.merchandise.product.featuredImage.url + '&width=360'"
                     />
@@ -15,7 +15,7 @@
                     <div class="absolute p-1">
                         <UiButton
                             variant="outline"
-                            class="shadow"
+                            class="shadow-sm"
                             @click="deleteCartLine(line.node)"
                         >
                             <IconTrash width="20" height="20" />
@@ -42,9 +42,31 @@
 
         <div>
             <div class="flex flex-col gap-4 bg-slate-50 p-8 rounded-lg">
-                <strong class="font-bold text-xl">
-                    <UiPrice :model-value="data.cart.cost.subtotalAmount" />
-                </strong>
+                <div class="flex items-center justify-between">
+                    <UiParagraph> Taxes </UiParagraph>
+
+                    <strong class="font-semibold">
+                        <UiPrice
+                            :model-value="data.cart.cost.totalTaxAmount"
+                            v-if="data.cart.cost.totalTaxAmount"
+                        />
+                        <UiParagraph v-else> --- </UiParagraph>
+                    </strong>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <UiParagraph> Shipping </UiParagraph>
+
+                    <UiParagraph> Calculated at checkout </UiParagraph>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <UiParagraph> Total </UiParagraph>
+
+                    <strong class="font-semibold">
+                        <UiPrice :model-value="data.cart.cost.totalAmount" />
+                    </strong>
+                </div>
 
                 <UiButton class="text-lg" :to="data.cart.checkoutUrl"> Checkout </UiButton>
             </div>

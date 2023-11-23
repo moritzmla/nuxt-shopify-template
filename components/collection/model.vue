@@ -5,7 +5,7 @@
                 loading="lazy"
                 width="360"
                 height="360"
-                class="rounded-lg aspect-square shadow transition duration-200 hover:scale-104"
+                class="rounded-lg aspect-square shadow-sm transition duration-200 hover:scale-104"
                 :alt="modelValue.image.altText"
                 :src="modelValue.image.url + '&width=360'"
             />
