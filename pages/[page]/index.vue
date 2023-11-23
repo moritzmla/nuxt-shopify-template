@@ -14,4 +14,9 @@
 const route = useRoute();
 
 const { data } = await usePage(route.params.page as string);
+
+useSeoMeta({
+    title: () => `${data.value?.pageByHandle.title} - Acme Store`,
+    description: () => data.value?.pageByHandle.bodySummary,
+});
 </script>

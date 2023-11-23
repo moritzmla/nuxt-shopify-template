@@ -10,9 +10,7 @@
             </div>
 
             <div class="flex flex-col gap-6">
-                <UiHeading>
-                    {{ data.product.title }}
-                </UiHeading>
+                <UiHeading> {{ data.product.title }} </UiHeading>
 
                 <UiParagraph v-if="data.product.description">
                     {{ data.product.description }}
@@ -177,4 +175,13 @@ function setOption(value: string, option: OptionModel) {
         },
     });
 }
+
+useSeoMeta({
+    title: () => {
+        const title = data.value?.product.seo.title ?? data.value?.product.title;
+
+        return `${title} - Acme Store`;
+    },
+    description: () => data.value?.product.description,
+});
 </script>

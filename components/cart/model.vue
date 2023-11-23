@@ -6,44 +6,7 @@
 
                 <p class="text-xl">Your cart is empty.</p>
             </div>
-            <div class="flex items-start gap-6" v-for="line in data.cart.lines.edges" v-else>
-                <div class="flex relative">
-                    <img
-                        loading="lazy"
-                        width="180"
-                        height="180"
-                        class="rounded-lg aspect-square shadow-sm"
-                        :alt="line.node.merchandise.product.featuredImage.altText"
-                        :src="line.node.merchandise.product.featuredImage.url + '&width=360'"
-                    />
-
-                    <div class="absolute p-1">
-                        <UiButton
-                            variant="outline"
-                            class="shadow-sm"
-                            :loading="isLoading"
-                            @click="deleteLine(line.node)"
-                        >
-                            <IconTrash width="20" height="20" />
-                        </UiButton>
-                    </div>
-                </div>
-
-                <div class="flex flex-col items-start gap-2">
-                    <UiLink
-                        class="text-xl"
-                        :to="`/products/${line.node.merchandise.product.handle}`"
-                    >
-                        {{ line.node.merchandise.product.title }}
-                    </UiLink>
-
-                    <div class="flex flex-col">
-                        <UiParagraph v-for="option in line.node.merchandise.selectedOptions">
-                            {{ option.name }}: {{ option.value }}
-                        </UiParagraph>
-                    </div>
-                </div>
-            </div>
+            <CartLine :model-value="line.node" v-for="line in data.cart.lines.edges" v-else />
         </div>
 
         <div>
@@ -52,11 +15,7 @@
                     <UiParagraph> Taxes </UiParagraph>
 
                     <strong class="font-semibold">
-                        <UiPrice
-                            :model-value="data.cart.cost.totalTaxAmount"
-                            v-if="data.cart.cost.totalTaxAmount"
-                        />
-                        <UiParagraph v-else> --- </UiParagraph>
+                        <UiPrice :model-value="data.cart.cost.totalTaxAmount" />
                     </strong>
                 </div>
 
@@ -87,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { IconShoppingCart, IconTrash } from "@tabler/icons-vue";
+import { IconShoppingCart } from "@tabler/icons-vue";
 import type { CartLineModel } from "~/types/shopify";
 
 const props = defineProps<{

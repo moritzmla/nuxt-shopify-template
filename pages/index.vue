@@ -36,4 +36,8 @@
 import Banner from "~/assets/banner.webp";
 
 const { data } = await useCollection("featured", 6);
+
+useSeoMeta({
+    title: "Home - Acme Store",
+});
 </script>

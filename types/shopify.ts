@@ -6,6 +6,11 @@ export type Nodes<T> = {
     node: T;
 };
 
+export type SeoModel = {
+    title: string;
+    description: string;
+};
+
 export type ImageModel = {
     url: string;
     altText: string;
@@ -18,6 +23,7 @@ export type ProductModel = {
     handle: string;
     title: string;
     description: string;
+    seo: SeoModel;
     featuredImage: ImageModel;
     options: Array<OptionModel>;
     variants: Edges<VariantModel>;
@@ -32,6 +38,7 @@ export type CollectionModel = {
     handle: string;
     title: string;
     description: string;
+    seo: SeoModel;
     image: ImageModel;
     products: Edges<ProductModel>;
 };
@@ -66,12 +73,12 @@ export type PriceModel = {
     currencyCode: string;
 };
 
-export type CartLineInput = {
+export type CreateCartLineRequest = {
     merchandiseId: string;
     quantity: number;
 };
 
-export type CartLineUpdateInput = {
+export type UpdateCartLineRequest = {
     id: string;
     merchandiseId: string;
     quantity: number;
@@ -80,6 +87,9 @@ export type CartLineUpdateInput = {
 export type CartLineModel = {
     id: string;
     quantity: number;
+    cost: {
+        totalAmount: PriceModel;
+    };
     merchandise: VariantModel & {
         product: ProductModel;
     };

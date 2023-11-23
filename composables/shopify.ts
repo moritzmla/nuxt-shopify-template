@@ -1,11 +1,11 @@
 import type {
-    CartLineInput,
-    CartLineUpdateInput,
     CartModel,
     CollectionModel,
+    CreateCartLineRequest,
     Edges,
     PageModel,
     ProductModel,
+    UpdateCartLineRequest,
 } from "~/types/shopify";
 
 const imageFragment = gql`
@@ -35,8 +35,8 @@ const pageFragment = gql`
 
 const seoFragment = gql`
     fragment seo on SEO {
-        description
         title
+        description
     }
 `;
 
@@ -298,8 +298,12 @@ export function useCart(cart: string) {
         ${cartFragment}
     `;
 
-    return useAsyncQuery<Response | undefined>(query, {
-        cart,
+    return useAsyncQuery<Response | undefined>({
+        key: "Cart",
+        query,
+        variables: {
+            cart,
+        },
     });
 }
 
@@ -329,7 +333,7 @@ export function useUpdateCartLines() {
 
     type Variables = {
         cart: string;
-        lines: Array<CartLineUpdateInput>;
+        lines: Array<UpdateCartLineRequest>;
     };
 
     const mutation = gql`
@@ -351,7 +355,7 @@ export function useCreateCartLine() {
 
     type Variables = {
         cart: string;
-        lines: Array<CartLineInput>;
+        lines: Array<CreateCartLineRequest>;
     };
 
     const mutation = gql`

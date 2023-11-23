@@ -13,4 +13,8 @@
 
 <script setup lang="ts">
 const { data } = await useCollections();
+
+useSeoMeta({
+    title: "Collections - Acme Store",
+});
 </script>

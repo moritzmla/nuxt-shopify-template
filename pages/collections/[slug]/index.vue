@@ -19,4 +19,13 @@
 const route = useRoute();
 
 const { data } = await useCollection(route.params.slug as string);
+
+useSeoMeta({
+    title: () => {
+        const title = data.value?.collection.seo.title ?? data.value?.collection.title;
+
+        return `${title} - Acme Store`;
+    },
+    description: () => data.value?.collection.description,
+});
 </script>

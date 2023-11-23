@@ -8,4 +8,8 @@
 
 <script setup lang="ts">
 const cookie = useCartCookie();
+
+useSeoMeta({
+    title: "Cart - Acme Store",
+});
 </script>

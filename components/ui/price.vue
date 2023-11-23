@@ -1,10 +1,12 @@
 <template>
     {{
-        Intl.NumberFormat(undefined, {
-            style: "currency",
-            currency: modelValue.currencyCode,
-            currencyDisplay: "narrowSymbol",
-        }).format(modelValue.amount)
+        modelValue
+            ? Intl.NumberFormat(undefined, {
+                  style: "currency",
+                  currency: modelValue.currencyCode,
+                  currencyDisplay: "narrowSymbol",
+              }).format(modelValue.amount)
+            : "---"
     }}
 </template>
 
@@ -12,6 +14,6 @@
 import type { PriceModel } from "~/types/shopify";
 
 defineProps<{
-    modelValue: PriceModel;
+    modelValue?: PriceModel;
 }>();
 </script>
