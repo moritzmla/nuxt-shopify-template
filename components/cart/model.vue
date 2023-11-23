@@ -1,7 +1,12 @@
 <template>
     <div class="grid md:grid-cols-2 gap-8" v-if="data">
         <div class="flex flex-col gap-8">
-            <div class="flex items-start gap-6" v-for="line in data.cart.lines.edges">
+            <div class="flex flex-col gap-4 items-center bg-slate-50 rounded-lg p-8" v-if="isEmpty">
+                <IconShoppingCart width="48" height="48" />
+
+                <p class="text-xl">Your cart is empty.</p>
+            </div>
+            <div class="flex items-start gap-6" v-for="line in data.cart.lines.edges" v-else>
                 <div class="flex relative">
                     <img
                         loading="lazy"
@@ -16,7 +21,8 @@
                         <UiButton
                             variant="outline"
                             class="shadow-sm"
-                            @click="deleteCartLine(line.node)"
+                            :loading="isLoading"
+                            @click="deleteLine(line.node)"
                         >
                             <IconTrash width="20" height="20" />
                         </UiButton>
@@ -68,26 +74,44 @@
                     </strong>
                 </div>
 
-                <UiButton class="text-lg" :to="data.cart.checkoutUrl"> Checkout </UiButton>
+                <UiButton
+                    class="text-lg"
+                    :disabled="isEmpty"
+                    :to="isEmpty ? undefined : data.cart.checkoutUrl"
+                >
+                    Checkout
+                </UiButton>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { IconTrash } from "@tabler/icons-vue";
+import { IconShoppingCart, IconTrash } from "@tabler/icons-vue";
 import type { CartLineModel } from "~/types/shopify";
 
 const props = defineProps<{
     modelValue: string;
 }>();
 
+const { mutate: deleteCartLine } = useDeleteCartLine();
 const { data, refresh } = useCart(props.modelValue);
 
-async function deleteCartLine(line: CartLineModel) {
-    const { mutate } = useDeleteCartLine(props.modelValue, [line.id]);
+const isLoading = ref(false);
 
-    await mutate();
-    await refresh();
+const isEmpty = computed(() => data.value && data.value.cart.lines.edges.length === 0);
+
+async function deleteLine(line: CartLineModel) {
+    isLoading.value = true;
+    try {
+        await deleteCartLine({
+            cart: props.modelValue,
+            lines: [line.id],
+        });
+
+        await refresh();
+    } finally {
+        isLoading.value = false;
+    }
 }
 </script>

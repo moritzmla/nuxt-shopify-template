@@ -318,8 +318,13 @@ export function useCreateCart() {
     return useMutation<Response>(mutation);
 }
 
-export function useUpdateCartLines(cart: string, lines: Array<CartLineUpdateInput>) {
+export function useUpdateCartLines() {
     type Response = {};
+
+    type Variables = {
+        cart: string;
+        lines: Array<CartLineUpdateInput>;
+    };
 
     const mutation = gql`
         mutation editCartItems($cart: ID!, $lines: [CartLineUpdateInput!]!) {
@@ -332,16 +337,16 @@ export function useUpdateCartLines(cart: string, lines: Array<CartLineUpdateInpu
         ${cartFragment}
     `;
 
-    return useMutation<Response>(mutation, {
-        variables: {
-            cart,
-            lines,
-        },
-    });
+    return useMutation<Response, Variables>(mutation);
 }
 
-export function useCreateCartLine(cart: string, lines: Array<CartLineInput>) {
+export function useCreateCartLine() {
     type Response = {};
+
+    type Variables = {
+        cart: string;
+        lines: Array<CartLineInput>;
+    };
 
     const mutation = gql`
         mutation addToCart($cart: ID!, $lines: [CartLineInput!]!) {
@@ -354,16 +359,16 @@ export function useCreateCartLine(cart: string, lines: Array<CartLineInput>) {
         ${cartFragment}
     `;
 
-    return useMutation<Response>(mutation, {
-        variables: {
-            cart,
-            lines,
-        },
-    });
+    return useMutation<Response, Variables>(mutation);
 }
 
-export function useDeleteCartLine(cart: string, lines: Array<string>) {
+export function useDeleteCartLine() {
     type Response = {};
+
+    type Variables = {
+        cart: string;
+        lines: Array<string>;
+    };
 
     const mutation = gql`
         mutation removeFromCart($cart: ID!, $lines: [ID!]!) {
@@ -376,10 +381,5 @@ export function useDeleteCartLine(cart: string, lines: Array<string>) {
         ${cartFragment}
     `;
 
-    return useMutation<Response>(mutation, {
-        variables: {
-            cart,
-            lines,
-        },
-    });
+    return useMutation<Response, Variables>(mutation);
 }

@@ -46,7 +46,11 @@
                     </div>
                 </div>
 
-                <UiButton :disabled="!currentVariant || outOfStock" @click="addCartLine">
+                <UiButton
+                    :loading="isLoading"
+                    :disabled="!currentVariant || outOfStock"
+                    @click="addCartLine"
+                >
                     {{ outOfStock ? "Out of stock" : "Add to cart" }}
                 </UiButton>
             </div>
@@ -63,7 +67,11 @@ const route = useRoute();
 const router = useRouter();
 const cookie = useCookie("cart");
 
+const { mutate: createCart } = useCreateCart();
+const { mutate: createCartLine } = useCreateCartLine();
 const { data } = await useProduct(route.params.slug as string);
+
+const isLoading = ref(false);
 
 const currentVariant = computed(() => {
     if (data.value) {
@@ -80,17 +88,23 @@ const outOfStock = computed(
 );
 
 async function addCartLine() {
-    const cart = await getCart();
+    isLoading.value = true;
+    try {
+        const cart = await getCart();
 
-    if (cart && currentVariant.value && currentVariant.value.node.availableForSale) {
-        const { mutate } = useCreateCartLine(cart.id, [
-            {
-                merchandiseId: currentVariant.value.node.id,
-                quantity: 1,
-            },
-        ]);
-
-        await mutate();
+        if (cart && currentVariant.value && currentVariant.value.node.availableForSale) {
+            await createCartLine({
+                cart: cart.id,
+                lines: [
+                    {
+                        merchandiseId: currentVariant.value.node.id,
+                        quantity: 1,
+                    },
+                ],
+            });
+        }
+    } finally {
+        isLoading.value = false;
     }
 }
 
@@ -103,9 +117,7 @@ async function getCart() {
         }
     }
 
-    const { mutate } = useCreateCart();
-
-    const response = await mutate();
+    const response = await createCart();
 
     if (response && response.data) {
         cookie.value = response.data.cartCreate.cart.id;
