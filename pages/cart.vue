@@ -6,7 +6,7 @@
             <div class="flex flex-col gap-8">
                 <div
                     class="flex flex-col gap-4 items-center bg-slate-50 rounded-lg p-8"
-                    v-if="isEmpty"
+                    v-if="!data || isEmpty"
                 >
                     <IconShoppingCart width="48" height="48" />
 
