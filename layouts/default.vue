@@ -35,21 +35,31 @@
         </div>
 
         <div
-            class="flex items-center justify-between text-sm font-semibold border-t border-slate-200 p-4"
+            class="flex gap-2 flex-col md:flex-row items-center justify-between text-sm font-semibold border-t border-slate-200 p-4"
         >
             <UiButton variant="text" to="/">
                 <span class="px-2"> © {{ new Date().getFullYear() }} ACME </span>
             </UiButton>
 
-            <UiButton target="_blank" to="https://moritzmueller.co/">
-                <span class="px-2"> Created by Moritz Müller </span>
-            </UiButton>
+            <div class="flex gap-2">
+                <UiButton
+                    variant="outline"
+                    target="_blank"
+                    to="https://github.com/moritz-mm/nuxt-shopify-template"
+                >
+                    <IconBrandGithub width="20" height="20" />
+                </UiButton>
+
+                <UiButton target="_blank" to="https://moritzmueller.co/">
+                    <span class="px-2"> Created by Moritz Müller </span>
+                </UiButton>
+            </div>
         </div>
     </footer>
 </template>
 
 <script setup lang="ts">
-import { IconShoppingCart } from "@tabler/icons-vue";
+import { IconBrandGithub, IconShoppingCart } from "@tabler/icons-vue";
 
 const { data } = usePages();
 </script>
