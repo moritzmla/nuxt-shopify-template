@@ -4,7 +4,7 @@
             <div class="flex flex-col gap-4">
                 <img
                     class="rounded-lg shadow-sm"
-                    :alt="data?.product.featuredImage.altText"
+                    :alt="data?.product.featuredImage.altText ?? data.product.title"
                     :src="data?.product.featuredImage.url + '&width=360'"
                 />
             </div>

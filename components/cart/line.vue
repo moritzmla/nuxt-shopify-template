@@ -5,7 +5,10 @@
             width="180"
             height="180"
             class="rounded-lg aspect-square shadow-sm"
-            :alt="modelValue.merchandise.product.featuredImage.altText"
+            :alt="
+                modelValue.merchandise.product.featuredImage.altText ??
+                modelValue.merchandise.product.title
+            "
             :src="modelValue.merchandise.product.featuredImage.url + '&width=360'"
         />
 
@@ -25,12 +28,22 @@
             </div>
 
             <div class="flex gap-2 flex-wrap">
-                <UiButton variant="outline" :loading="deleteLoading" @click="deleteLine">
+                <UiButton
+                    variant="outline"
+                    aria-label="Delete Line Item"
+                    :loading="deleteLoading"
+                    @click="deleteLine"
+                >
                     <IconTrash width="20" height="20" />
                 </UiButton>
 
                 <div class="flex items-center border border-slate-200 rounded-lg">
-                    <UiButton variant="text" :loading="updateLoading" @click="changeQuantity(-1)">
+                    <UiButton
+                        variant="text"
+                        aria-label="Increase Product Quantity"
+                        :loading="updateLoading"
+                        @click="changeQuantity(-1)"
+                    >
                         <IconMinus width="20" height="20" />
                     </UiButton>
 
@@ -38,7 +51,12 @@
                         {{ modelValue.quantity }}
                     </span>
 
-                    <UiButton variant="text" :loading="updateLoading" @click="changeQuantity(1)">
+                    <UiButton
+                        variant="text"
+                        aria-label="Decrease Product Quantity"
+                        :loading="updateLoading"
+                        @click="changeQuantity(1)"
+                    >
                         <IconPlus width="20" height="20" />
                     </UiButton>
                 </div>

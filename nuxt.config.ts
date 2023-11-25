@@ -30,7 +30,21 @@ export default defineNuxtConfig({
     app: {
         head: {
             title: "Acme Store",
-            link: [{ rel: "icon", href: "/favicon.svg" }],
+            link: [
+                {
+                    rel: "icon",
+                    href: "/favicon.svg",
+                },
+            ],
+            meta: [
+                {
+                    name: "description",
+                    content: "Acme Store Description",
+                },
+            ],
+            htmlAttrs: {
+                lang: "en",
+            },
             bodyAttrs: {
                 class: "overflow-y-scroll",
             },

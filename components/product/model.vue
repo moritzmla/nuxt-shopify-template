@@ -6,7 +6,7 @@
                 width="360"
                 height="360"
                 class="rounded-lg aspect-square shadow-sm transition duration-200 hover:scale-104"
-                :alt="modelValue.featuredImage.altText"
+                :alt="modelValue.featuredImage.altText ?? modelValue.title"
                 :src="modelValue.featuredImage.url + '&width=360'"
             />
         </NuxtLink>

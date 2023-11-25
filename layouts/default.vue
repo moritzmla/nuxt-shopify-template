@@ -10,7 +10,7 @@
             <UiLink class="text-sm hover:underline" to="/collections"> Explore </UiLink>
         </div>
 
-        <UiButton variant="text" class="text-sm" to="/cart">
+        <UiButton variant="text" class="text-sm" aria-label="Shopping Cart" to="/cart">
             <IconShoppingCart width="22" height="22" />
 
             <span class="hidden md:block"> Shopping Cart </span>
@@ -45,6 +45,7 @@
                 <UiButton
                     variant="outline"
                     target="_blank"
+                    aria-label="GitHub"
                     to="https://github.com/moritz-mm/nuxt-shopify-template"
                 >
                     <IconBrandGithub width="20" height="20" />
