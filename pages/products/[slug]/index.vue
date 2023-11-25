@@ -1,25 +1,25 @@
 <template>
-    <UiCenter v-if="data">
+    <UiCenter>
         <div class="grid sm:grid-cols-2 gap-8">
             <div class="flex flex-col gap-4">
                 <img
                     class="rounded-lg shadow-sm"
-                    :alt="data?.product.featuredImage.altText ?? data.product.title"
+                    :alt="data?.product.featuredImage.altText ?? data?.product.title"
                     :src="data?.product.featuredImage.url + '&width=360'"
                 />
             </div>
 
             <div class="flex flex-col gap-6">
-                <UiHeading> {{ data.product.title }} </UiHeading>
+                <UiHeading> {{ data?.product.title }} </UiHeading>
 
-                <UiParagraph v-if="data.product.description">
-                    {{ data.product.description }}
+                <UiParagraph v-if="data?.product.description">
+                    {{ data?.product.description }}
                 </UiParagraph>
 
                 <strong class="font-bold text-lg">
                     <UiPrice
                         :model-value="
-                            currentVariant?.node.price ?? data.product.priceRange.minVariantPrice
+                            currentVariant?.node.price ?? data?.product.priceRange.minVariantPrice
                         "
                     />
                 </strong>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <ProductRecommendations :model-value="data.product.id" />
+        <ProductRecommendations :model-value="data.product.id" v-if="data?.product.id" />
     </UiCenter>
 </template>
 
