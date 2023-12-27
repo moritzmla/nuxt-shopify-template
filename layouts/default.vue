@@ -51,7 +51,7 @@
                     <IconBrandGithub width="20" height="20" />
                 </UiButton>
 
-                <UiButton target="_blank" to="https://moritzmueller.co/">
+                <UiButton target="_blank" to="https://moritzmla.com/">
                     <span class="px-2"> Created by Moritz Müller </span>
                 </UiButton>
             </div>
