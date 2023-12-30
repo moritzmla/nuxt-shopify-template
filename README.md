@@ -7,7 +7,7 @@ A simple Shopify template built with Nuxt 3, providing a seamless development ex
 1. Clone the repository:
 
     ```
-    git clone https://github.com/moritz-mm/nuxt-shopify-template.git
+    git clone https://github.com/moritzmla/nuxt-shopify-template.git
     ```
 
 2. Install dependencies:

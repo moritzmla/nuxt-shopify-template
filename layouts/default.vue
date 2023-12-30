@@ -46,7 +46,7 @@
                     variant="outline"
                     target="_blank"
                     aria-label="GitHub"
-                    to="https://github.com/moritz-mm/nuxt-shopify-template"
+                    to="https://github.com/moritzmla/nuxt-shopify-template"
                 >
                     <IconBrandGithub width="20" height="20" />
                 </UiButton>
